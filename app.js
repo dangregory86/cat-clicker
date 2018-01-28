@@ -1,4 +1,7 @@
 //set a variable for the cat picture and the click text
+const catPic = $('#cat-picture');
+const catName = $("#cat-name");
+const clickText = $('#score');
 
 //instantiate all 5 cats
 const cats = [];
@@ -12,37 +15,55 @@ const JeremyCat = new Cat('Jeremy', 'pics/cat4.jpg');
 cats.push(JeremyCat);
 const HenryCat = new Cat('Henry', 'pics/cat5.jpg');
 cats.push(HenryCat);
+/*
+* @description. a function to add the cat names to the cat selection menu
+*/
+function addCats() {
+  let elem = document.createElement('div');
+  for (let x = 0; x < cats.length; x++) {
+    let p = document.createElement('p');
+    let nm = document.createTextNode(cats[x].name);
+    const thisCat = cats[x];
+    p.setAttribute('class', 'top-bottom-border');
+    p.appendChild(nm);
+    elem.appendChild(p);
+    p.addEventListener('click', (function(catCopy) {
+        return function() {
+            updatePicture(catCopy);
+        };
+    })(thisCat));
+  }
+  $('#cat-list-title').after(elem);
+}
 
-console.log(cats);
+/* @description. a function to change the cat picture name and number of clicks
+* @Params. {Object cat}.
+*/
+function updatePicture(cat){
+  catName.text(cat.name);
+  catPic.attr('src', cat.image);
+  catPic.attr('alt', cat.name + "the cat");
+  updateClickText(cat);
+}
 
-
-const clickText = $('#score');
-const bobCatPic = $('#cat1-picture');
-const bobCatName = $("#cat-name-1");
-const steveCatPic = $('#cat2-picture');
-const steveCatName = $("#cat-name-2");
-let bobClicks = 0;
-let steveClicks = 0;
-
-//first set the cat names above the pictures
-bobCatName.text(bobCatPic.attr('alt'));
-steveCatName.text(steveCatPic.attr('alt'));
-
-//the function to check for bob being clicked on
-bobCatPic.click(function(){
-  bobClicks++;
-  updateClickText();
-  console.log(bobClicks);
+catPic.click(function(event) {
+  let name = catName.text();
+  for(let cat of cats){
+    if(cat.name === name){
+      updateClicks(cat);
+    }
+  }
 });
+//the function to check for the cat being clicked on
+function updateClicks(cat) {
+  cat.clicks++;
+  updateClickText(cat);
+}
 
-//the function to check for bob being clicked on
-steveCatPic.click(function(){
-  steveClicks++;
-  updateClickText();
-  console.log(steveClicks);
-});
-
-function updateClickText(){
-  let clickString = "You have clicked Bob <strong>" + bobClicks + "</strong> times and Steve <strong>" + steveClicks + "</strong> times!!";
+function updateClickText(cat) {
+  let clickString = "You have clicked " + cat.name +" <strong>" + cat.clicks + "</strong> times!!";
   clickText.html(clickString);
 }
+
+addCats();
+updatePicture(cats[0]);
