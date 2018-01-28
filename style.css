@@ -28,38 +28,31 @@ figcaption {
 
 .main_section {
   width: 100%;
+  flex-direction: row;
+  display: inline-flex;
+  justify-content: space-around;
+}
+
+.cat-box {
+  width: 50%;
+  padding: 3%;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
 .main_image {
   width: 100%;
+  max-width: 500px;
+  height: auto;
   margin-bottom: 20px;
 }
 
-@media screen and (max-width: 850px) and (min-width: 551px) {
-  .bottom_section {
-    column-count: 2;
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .bottom_item {
-    flex: 0 1 49%;
-  }
+.name-text {
+  justify-content: center;
+  width: 100%;
+  text-align: center;
 }
 
-@media screen and (max-width: 550px) {
-  .header {
-    flex-wrap: wrap;
-  }
-  .bottom_section {
-    column-count: 1;
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .bottom_item {
-    width: 100%;
-    max-width: 100%;
-    flex-basis: 100%;
-  }
-}
+@media screen and (max-width: 850px) and (min-width: 551px) {}
+
+@media screen and (max-width: 550px) {}
